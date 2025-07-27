@@ -1,13 +1,27 @@
 import React from "react";
 import { Link } from "react-router";
 import { Pencil, Trash2 } from "lucide-react";
+import api from "../lib/axios"
+import { toast } from "react-hot-toast";
 
-const NoteCard = ({ note, onEdit, onDelete }) => {
+const NoteCard = ({ note,setNotes }) => {
   const formattedDate = new Date(note.createdAt).toLocaleString(undefined, {
     dateStyle: "medium",
     timeStyle: "short",
   });
 
+
+  const handleDelete = async(e,id) =>{
+    if (window.confirm("Are you sure you want to delete this note?")) {
+      try {
+        await api.delete(`/notes/${id}`);
+        setNotes((prev)=> prev.filter(note => note._id !== id));
+        toast.success("Note deleted successfully!");
+      } catch (error) {
+        toast.error("Failed to delete note. Please try again.");
+      }
+    }
+  }
   return (
     <div className="relative">
       {/* Circle Pin */}
@@ -36,6 +50,7 @@ const NoteCard = ({ note, onEdit, onDelete }) => {
               <button
                 className="p-1 text-red-500 hover:text-red-700 transition"
                 style={{ background: 'none', border: 'none' }}
+                onClick={(e)=>handleDelete(e,note._id)}
               >
                 <Trash2 size={18} />
               </button>
