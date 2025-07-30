@@ -114,7 +114,6 @@ NottyPI/
 - `PUT /api/notes/:id` – Update an existing note
 - `DELETE /api/notes/:id` - Delete a specific note
 
-🌐 **[Live Demo](https://nottypi-c90t.onrender.com/)**
 
 ## 🤝 Contributing
 1. Fork the project
